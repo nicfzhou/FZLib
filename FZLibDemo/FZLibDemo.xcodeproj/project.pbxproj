@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE583D1755749769D7ED21F7 /* Pods_FZLibDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEC9CDB8F51F1F468BF1D540 /* Pods_FZLibDemo.framework */; };
 		E05E47F91EAD872000E22464 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E05E47F81EAD872000E22464 /* main.m */; };
 		E05E47FC1EAD872000E22464 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E05E47FB1EAD872000E22464 /* AppDelegate.m */; };
 		E05E47FF1EAD872000E22464 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E05E47FE1EAD872000E22464 /* ViewController.m */; };
@@ -15,6 +16,7 @@
 		E05E48071EAD872000E22464 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E05E48051EAD872000E22464 /* LaunchScreen.storyboard */; };
 		E05E48121EAD872000E22464 /* FZLibDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E05E48111EAD872000E22464 /* FZLibDemoTests.m */; };
 		E05E481D1EAD872000E22464 /* FZLibDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = E05E481C1EAD872000E22464 /* FZLibDemoUITests.m */; };
+		F3416A40996F384B6FD74F1B /* Pods_FZLibDemoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A2E70C76D4967FC30C19AB /* Pods_FZLibDemoTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		006EBE281581342DF28C13E6 /* Pods-FZLibDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FZLibDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FZLibDemo/Pods-FZLibDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		21FD51BC18B7613833A12454 /* Pods-FZLibDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FZLibDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-FZLibDemo/Pods-FZLibDemo.release.xcconfig"; sourceTree = "<group>"; };
+		2E14FE48B28929EDA4668FBE /* Pods-FZLibDemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FZLibDemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FZLibDemoTests/Pods-FZLibDemoTests.release.xcconfig"; sourceTree = "<group>"; };
+		5CF342BCF092BB537402533F /* Pods-FZLibDemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FZLibDemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FZLibDemoTests/Pods-FZLibDemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		75A2E70C76D4967FC30C19AB /* Pods_FZLibDemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FZLibDemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E05E47F41EAD872000E22464 /* FZLibDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FZLibDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E05E47F81EAD872000E22464 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E05E47FA1EAD872000E22464 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -51,6 +58,7 @@
 		E05E48181EAD872000E22464 /* FZLibDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FZLibDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E05E481C1EAD872000E22464 /* FZLibDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FZLibDemoUITests.m; sourceTree = "<group>"; };
 		E05E481E1EAD872000E22464 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EEC9CDB8F51F1F468BF1D540 /* Pods_FZLibDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FZLibDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE583D1755749769D7ED21F7 /* Pods_FZLibDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3416A40996F384B6FD74F1B /* Pods_FZLibDemoTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +88,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29DD7DA6B0C8278C1C13D51F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EEC9CDB8F51F1F468BF1D540 /* Pods_FZLibDemo.framework */,
+				75A2E70C76D4967FC30C19AB /* Pods_FZLibDemoTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3C6E9A56B95B4196177CFF53 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				006EBE281581342DF28C13E6 /* Pods-FZLibDemo.debug.xcconfig */,
+				21FD51BC18B7613833A12454 /* Pods-FZLibDemo.release.xcconfig */,
+				5CF342BCF092BB537402533F /* Pods-FZLibDemoTests.debug.xcconfig */,
+				2E14FE48B28929EDA4668FBE /* Pods-FZLibDemoTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		E05E47EB1EAD872000E22464 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +115,8 @@
 				E05E48101EAD872000E22464 /* FZLibDemoTests */,
 				E05E481B1EAD872000E22464 /* FZLibDemoUITests */,
 				E05E47F51EAD872000E22464 /* Products */,
+				3C6E9A56B95B4196177CFF53 /* Pods */,
+				29DD7DA6B0C8278C1C13D51F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -147,9 +179,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E05E48211EAD872000E22464 /* Build configuration list for PBXNativeTarget "FZLibDemo" */;
 			buildPhases = (
+				4462BD799D7282601CE59C0C /* Check Pods Manifest.lock */,
 				E05E47F01EAD872000E22464 /* Sources */,
 				E05E47F11EAD872000E22464 /* Frameworks */,
 				E05E47F21EAD872000E22464 /* Resources */,
+				D00C94EEB8E660EB55915AD6 /* Embed Pods Frameworks */,
+				9910DF5C3B90593DC483CE33 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -164,9 +199,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E05E48241EAD872000E22464 /* Build configuration list for PBXNativeTarget "FZLibDemoTests" */;
 			buildPhases = (
+				D3F514F1C9B69B987BDD774F /* Check Pods Manifest.lock */,
 				E05E48091EAD872000E22464 /* Sources */,
 				E05E480A1EAD872000E22464 /* Frameworks */,
 				E05E480B1EAD872000E22464 /* Resources */,
+				0FA0B0D872F9DC31002D117E /* Embed Pods Frameworks */,
+				06489064AB14A412BD8BC2D0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -212,6 +250,7 @@
 					E05E480C1EAD872000E22464 = {
 						CreatedOnToolsVersion = 8.3.1;
 						DevelopmentTeam = 8BSUY3G8SS;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = E05E47F31EAD872000E22464;
 					};
@@ -269,6 +308,99 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06489064AB14A412BD8BC2D0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FZLibDemoTests/Pods-FZLibDemoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0FA0B0D872F9DC31002D117E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FZLibDemoTests/Pods-FZLibDemoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4462BD799D7282601CE59C0C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9910DF5C3B90593DC483CE33 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FZLibDemo/Pods-FZLibDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D00C94EEB8E660EB55915AD6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FZLibDemo/Pods-FZLibDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3F514F1C9B69B987BDD774F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E05E47F01EAD872000E22464 /* Sources */ = {
@@ -424,6 +556,7 @@
 		};
 		E05E48221EAD872000E22464 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 006EBE281581342DF28C13E6 /* Pods-FZLibDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8BSUY3G8SS;
@@ -436,6 +569,7 @@
 		};
 		E05E48231EAD872000E22464 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21FD51BC18B7613833A12454 /* Pods-FZLibDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8BSUY3G8SS;
@@ -448,6 +582,7 @@
 		};
 		E05E48251EAD872000E22464 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CF342BCF092BB537402533F /* Pods-FZLibDemoTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 8BSUY3G8SS;
@@ -455,12 +590,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hz.FZLibDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FZLibDemo.app/FZLibDemo";
 			};
 			name = Debug;
 		};
 		E05E48261EAD872000E22464 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E14FE48B28929EDA4668FBE /* Pods-FZLibDemoTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = 8BSUY3G8SS;
@@ -468,6 +605,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hz.FZLibDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FZLibDemo.app/FZLibDemo";
 			};
 			name = Release;
@@ -515,6 +653,7 @@
 				E05E48231EAD872000E22464 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E05E48241EAD872000E22464 /* Build configuration list for PBXNativeTarget "FZLibDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -523,6 +662,7 @@
 				E05E48261EAD872000E22464 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E05E48271EAD872000E22464 /* Build configuration list for PBXNativeTarget "FZLibDemoUITests" */ = {
 			isa = XCConfigurationList;
@@ -531,6 +671,7 @@
 				E05E48291EAD872000E22464 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
