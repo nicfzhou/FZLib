@@ -195,6 +195,73 @@ static char *fz_autoLayoutKey;
     return [self equalToViewWithMask:FZAutoLayoutMaskHeight];
 }
 
+
+
+- (FZAutoLayoutView)topEqualToView{
+    return ^id(UIView *target){
+        return self.topEqualTo(target,FZAutoLayoutMaskTop);
+    };
+}
+- (FZAutoLayoutView)leftEqualToView{
+    return ^id(UIView *target){
+        return self.leftEqualTo(target,FZAutoLayoutMaskLeft);
+    };
+}
+- (FZAutoLayoutView)bottomEqualToView{
+    return ^id(UIView *target){
+        return self.bottomEqualTo(target,FZAutoLayoutMaskBottom);
+    };
+}
+- (FZAutoLayoutView)rightEqualToView{
+    return ^id(UIView *target){
+        return self.rightEqualTo(target,FZAutoLayoutMaskRight);
+    };
+}
+
+- (FZAutoLayoutView)topSpaceToView{
+    return ^id(UIView *target){
+        return self.topEqualTo(target,FZAutoLayoutMaskBottom);
+    };
+}
+- (FZAutoLayoutView)leftSpaceToView{
+    return ^id(UIView *target){
+        return self.leftEqualTo(target,FZAutoLayoutMaskRight);
+    };
+}
+- (FZAutoLayoutView)bottomSpaceToView{
+    return ^id(UIView *target){
+        return self.bottomEqualTo(target,FZAutoLayoutMaskTop);
+    };
+}
+- (FZAutoLayoutView)rightSpaceToView{
+    return ^id(UIView *target){
+        return self.rightEqualTo(target,FZAutoLayoutMaskLeft);
+    };
+}
+
+- (FZAutoLayoutView)centerXEqualToView{
+    return ^id(UIView *target){
+        return self.centerXEqualTo(target,FZAutoLayoutMaskCenterX);
+    };
+}
+- (FZAutoLayoutView)centerYEqualToView{
+    return ^id(UIView *target){
+        return self.centerYEqualTo(target,FZAutoLayoutMaskCenterY);
+    };
+}
+
+- (FZAutoLayoutView)heightEqualToView{
+    return ^id(UIView *target){
+        return self.heightEqualTo(target,FZAutoLayoutMaskHeight);
+    };
+}
+- (FZAutoLayoutView)widthEqualToView{
+    return ^id(UIView *target){
+        return self.widthEqualTo(target,FZAutoLayoutMaskWidth);
+    };
+}
+
+
 - (FZAutoLayoutNumber)widthIs{
     return ^id(CGFloat width){
       

@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger,FZAutoLayoutMask) {
     FZAutoLayoutMaskLastBaseline,
 };
 
-
+typedef FZAutoLayout*(^FZAutoLayoutView)(UIView *target);
 typedef FZAutoLayout*(^FZAutoLayoutMaskTo)(UIView *target,FZAutoLayoutMask mask);
 typedef FZAutoLayout*(^FZAutoLayoutNumber)(CGFloat);
 typedef FZAutoLayout*(^FZAutoLayoutEdge)(CGFloat top,CGFloat left,CGFloat bottom,CGFloat right);
@@ -52,6 +52,24 @@ typedef FZAutoLayout*(^FZAutoLayoutNone)();
 - (FZAutoLayoutMaskTo)centerYEqualTo;
 - (FZAutoLayoutMaskTo)widthEqualTo;
 - (FZAutoLayoutMaskTo)heightEqualTo;
+
+- (FZAutoLayoutView)topEqualToView;
+- (FZAutoLayoutView)leftEqualToView;
+- (FZAutoLayoutView)bottomEqualToView;
+- (FZAutoLayoutView)rightEqualToView;
+
+- (FZAutoLayoutView)topSpaceToView;
+- (FZAutoLayoutView)leftSpaceToView;
+- (FZAutoLayoutView)bottomSpaceToView;
+- (FZAutoLayoutView)rightSpaceToView;
+
+- (FZAutoLayoutView)centerXEqualToView;
+- (FZAutoLayoutView)centerYEqualToView;
+
+- (FZAutoLayoutView)heightEqualToView;
+- (FZAutoLayoutView)widthEqualToView;
+
+
 
 - (FZAutoLayoutNumber)widthIs;
 - (FZAutoLayoutNumber)heightIs;
