@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger,FZAutoLayoutMask) {
 
 typedef FZAutoLayout*(^FZAutoLayoutMaskTo)(UIView *target,FZAutoLayoutMask mask);
 typedef FZAutoLayout*(^FZAutoLayoutNumber)(CGFloat);
-typedef FZAutoLayout*(^FZAutoLayoutEdge)(UIEdgeInsets);
+typedef FZAutoLayout*(^FZAutoLayoutEdge)(CGFloat top,CGFloat left,CGFloat bottom,CGFloat right);
 typedef FZAutoLayout*(^FZAutoLayoutNone)();
 
 @interface FZAutoLayout : NSObject
@@ -59,9 +59,6 @@ typedef FZAutoLayout*(^FZAutoLayoutNone)();
 - (FZAutoLayoutNone)autoWidth;
 - (FZAutoLayoutNone)autoHeight;
 
-
-
-- (FZAutoLayoutNumber)animate;
 
 @end
 

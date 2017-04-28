@@ -157,14 +157,14 @@ static char *fz_autoLayoutKey;
 }
 
 - (FZAutoLayoutEdge)edgeInsets{
-    return ^id(UIEdgeInsets insets){
+    return ^id(CGFloat top,CGFloat left,CGFloat bottom,CGFloat right){
       
         UIView *superView = self.target.superview;
         if (superView) {
-            self.topEqualTo(superView,FZAutoLayoutMaskTop).offset(insets.top)
-            .leftEqualTo(superView,FZAutoLayoutMaskLeft).offset(insets.left)
-            .rightEqualTo(superView,FZAutoLayoutMaskRight).offset(-insets.right)
-            .bottomEqualTo(superView,FZAutoLayoutMaskBottom).offset(-insets.bottom);
+            self.topEqualTo(superView,FZAutoLayoutMaskTop).offset(top)
+            .leftEqualTo(superView,FZAutoLayoutMaskLeft).offset(left)
+            .rightEqualTo(superView,FZAutoLayoutMaskRight).offset(-right)
+            .bottomEqualTo(superView,FZAutoLayoutMaskBottom).offset(-bottom);
         }        
         return self;
     };
@@ -263,16 +263,6 @@ static char *fz_autoLayoutKey;
     };
 }
 
-
-- (FZAutoLayoutNumber)animate{
-    return ^id(CGFloat duration){
-      
-        [UIView animateWithDuration:duration animations:^{
-            [self.target layoutIfNeeded];
-        }];
-        return self;
-    };
-}
 
 #pragma mark Private
 - (void)resetLastModifiedConstraint{
