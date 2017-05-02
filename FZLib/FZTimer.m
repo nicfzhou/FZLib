@@ -122,7 +122,7 @@ static NSMutableArray *runingTimers;
  *  @brief 暂停循环定时器（一次性定时器调用无任何状态修改）
  */
 - (void)suspend{
-    if(_timer){
+    if(_timer && !_isSuspend){
         dispatch_suspend(_timer);
         _isSuspend = YES;
     }
@@ -133,8 +133,10 @@ static NSMutableArray *runingTimers;
  */
 - (void)invalidate{
     if (_timer) {
+        if (_isSuspend) {
+            [self resume];
+        }
         dispatch_source_cancel(_timer);
-        _timer = nil;
         _isStop = YES;
     }
     [runingTimers removeObject:self];
