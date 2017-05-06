@@ -3,11 +3,11 @@ use_frameworks!
 platform :ios, "8.0"
 
 
-target :FZLibDemo, :exclusive => true do
+target :FZLibDemo do
     pod "FZLib", :path => "../"  #spec file path
 end
 
-target :FZLibDemoTests, :exclusive => true do
+target :FZLibDemoTests do
     pod "FZLib", :path => "../"
 
     pod 'Specta'
