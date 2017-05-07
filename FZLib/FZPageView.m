@@ -282,7 +282,9 @@
     //标题内容刷新
     [[RACSignal combineLatest:@[
                                [RACObserve(self, titleTexts) throttle:.5],
-                               [RACObserve(self, titleControlsStrollView.bounds) throttle:.5],
+                               [[[RACObserve(self, titleControlsStrollView.bounds) map:^id(NSValue *x){
+                                    return  [NSValue valueWithCGSize:x.CGRectValue.size];
+                                }] throttle:.5] distinctUntilChanged],
                                RACObserve(self, style.adjustTitleWidth),
                                RACObserve(self, style.titleNormalFont),
                                RACObserve(self, style.fontScaleFactor)
@@ -291,9 +293,9 @@
      
          @strongify(self)
          NSArray<NSString *> *texts = t.first;
-         CGRect rect = ((NSValue *)t.second).CGRectValue;
+         CGSize size = ((NSValue *)t.second).CGSizeValue;
          //title最小宽度，如果实际宽度超过这个，则以实际宽度为准
-         CGFloat textMinWidth = rect.size.width / texts.count;
+         CGFloat textMinWidth = size.width / texts.count;
          if(!self.style.adjustTitleWidth){
              textMinWidth = 0;//已实际宽度为准
          }
@@ -338,7 +340,7 @@
                          
                          @strongify(self)
                          NSInteger page = [self.titleTexts indexOfObject:text];
-                         [self setPage:page animate:YES];
+                         [self setPage:page animate:NO];
                      }];
                  }
                  //update frame
@@ -352,6 +354,7 @@
                  if (!layer) {
                      layer = [CATextLayer layer];
                      layer.contentsScale = [UIScreen mainScreen].scale;
+                     layer.wrapped = YES;
                      layer.string = text;
                      layer.alignmentMode = kCAAlignmentCenter;
                      [control.layer addSublayer:layer];
@@ -385,42 +388,82 @@
                          CGFloat factor  = [(NSNumber *)t.first floatValue];
                          UIColor *colorNormal = t.third;
                          UIColor *colorSelected = t.second;
-                         //关闭隐式动画
-                         [CATransaction begin];
-                         [CATransaction setDisableActions:YES];
-                         CGFloat r1,g1,b1,r2,g2,b2;
-                         [colorSelected getRed:&r1 green:&g1 blue:&b1 alpha:NULL];
-                         [colorNormal getRed:&r2 green:&g2 blue:&b2 alpha:NULL];
-                         float r = fabs(r1 - ((r1 - r2) * factor));
-                         float g = fabs(g1 - ((g1 - g2) * factor));
-                         float b = fabs(b1 - ((b1 - b2) * factor));
-                         UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
-                         layer.foregroundColor = color.CGColor;
-                         
                          UIFont *font = (UIFont *)t.fifth;
-                         //字体大小
                          CGFloat minFontSize = [font pointSize];
                          CGFloat maxFontSize = minFontSize * ((NSNumber *)t.fourth).floatValue;
-                         layer.fontSize = maxFontSize - ((maxFontSize - minFontSize) * factor);
-                         //字体类型
-                         CFStringRef fontName = (__bridge CFStringRef)(font.fontName);
-                         CGFontRef fontRef = CGFontCreateWithFontName(fontName);
-                         layer.font = fontRef;
-                         //layer的位置也要微调，以便垂直居中
-                         font = [UIFont fontWithName:font.fontName size:layer.fontSize];
-                         CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:font}];
-                         layer.frame = CGRectMake(0,
-                                                  (40 - size.height) * .5,
-                                                  controlExpectedFrame.size.width,
-                                                  size.height);
+                         CGFloat targetFontSize = maxFontSize - ((maxFontSize - minFontSize) * factor);
+                         CGFloat curFactor = (maxFontSize - layer.fontSize)/(maxFontSize - minFontSize);
+                         BOOL needAnimate = ^BOOL{
+                             return (factor == 1 && curFactor == 0) || (factor == 0 && curFactor == 1);
+                         }();
+                         
+                         void(^setColorAndName)() = ^{
+                             //字体颜色
+                             CGFloat r1,g1,b1,r2,g2,b2;
+                             [colorSelected getRed:&r1 green:&g1 blue:&b1 alpha:NULL];
+                             [colorNormal getRed:&r2 green:&g2 blue:&b2 alpha:NULL];
+                             float r = fabs(r1 - ((r1 - r2) * factor));
+                             float g = fabs(g1 - ((g1 - g2) * factor));
+                             float b = fabs(b1 - ((b1 - b2) * factor));
+                             UIColor *color = [UIColor colorWithRed:r green:g blue:b alpha:1];
+                             layer.foregroundColor = color.CGColor;
+                             
+                             //字体类型
+                             CFStringRef fontName = (__bridge CFStringRef)(font.fontName);
+                             CGFontRef fontRef = CGFontCreateWithFontName(fontName);
+                             layer.font = fontRef;
+                             CGFontRelease(fontRef);
+                         };
+                         
+                         void(^setFontSize)() = ^{
+                             //字体大小
+                             layer.fontSize = targetFontSize;
+                         };
+                         
+                         void(^setBounds)() = ^{
+                             //layer的位置也要微调，以便垂直居中
+                             UIFont *_font = [UIFont fontWithName:font.fontName size:targetFontSize];
+                             CGSize size = [text sizeWithAttributes:@{NSFontAttributeName:_font}];
+                             CGRect frame = CGRectMake(0,
+                                                       (40 - size.height) * .5,
+                                                       controlExpectedFrame.size.width,
+                                                       size.height);
+                             layer.bounds = CGRectMake(0, 0, frame.size.width, frame.size.height);
+                         };
+    
+                         [CATransaction begin];
+                         if(needAnimate){//表示点击标题按钮，没有滚动动画，直接切换内容，并且直接变化标题字体
+                             [CATransaction setAnimationDuration:.2];
+                             [CATransaction setCompletionBlock:^{
+                                 [CATransaction begin];
+                                 [CATransaction setDisableActions:YES];
+                                 setBounds();
+                                 setFontSize();
+                                 layer.transform = CATransform3DIdentity;
+                                 [CATransaction commit];
+                             }];
+                             setColorAndName();
+                             //transform - 先直接缩放（保证字体居中），缩放完成后，将字体大小和bounds设置为最终样式
+                             CGFloat scaleFactor = targetFontSize / layer.fontSize;
+                             layer.transform = CATransform3DScale(CATransform3DIdentity, scaleFactor, scaleFactor, 1);
+                         }else{
+                             //用户手动滚动过程
+                             [CATransaction setDisableActions:YES];
+                             setColorAndName();
+                             setFontSize();
+                             setBounds();
+                         }
                          [CATransaction commit];
                      }];
                  }
+                 //textLayer的中心点固定在Control的中间
+                 layer.position = CGPointMake(controlExpectedFrame.size.width * .5,
+                                              controlExpectedFrame.size.height * .5);
                  return layer;
              }();
          }];
          
-         self.titleControlsStrollView.contentSize = CGSizeMake(xOffset, rect.size.height);
+         self.titleControlsStrollView.contentSize = CGSizeMake(xOffset, size.height);
      }];
     
 }
