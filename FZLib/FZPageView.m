@@ -245,6 +245,8 @@
          @strongify(self)
          [self.contentCollectionView reloadData];
      }];
+    //标题颜色
+    RAC(self,titleControlsStrollView.backgroundColor) = RACObserve(self, style.titleBarBackgroundColor);
     //标题位置刷新 - 使其尽量在居中位置显示
     [[RACSignal combineLatest:@[
                                [[RACObserve(self, currentPage) distinctUntilChanged] delay:.1],
