@@ -18,11 +18,6 @@
 @property(nonatomic,assign) FZAutoLayoutMask lastModifiedConstraintMask2;
 
 
-@property(nonatomic,weak) NSLayoutConstraint *heightConstraint;
-@property(nonatomic,weak) NSLayoutConstraint *widthConstraint;
-@property(nonatomic,weak) NSLayoutConstraint *ratioConstraint;
-
-
 - (void)resetLastModifiedConstraint;
 - (void)resetHugAndCompressPriority;
 @end
@@ -91,14 +86,7 @@ static char *fz_autoLayoutKey;
 }
 - (FZAutoLayoutNumber)offset{
     return ^id(CGFloat offset){
-        
-        if (self.ratioConstraint == self.lastModifiedConstraint
-            || self.widthConstraint == self.lastModifiedConstraint
-            || self.heightConstraint == self.lastModifiedConstraint) {
-            
-            //宽高比、高度、宽度无法设置offset
-            return self;
-        }
+
         [self updateConstraintWithPriority:self.lastModifiedConstraint.priority
                                     offset:offset
                                 multiplier:self.lastModifiedConstraint.multiplier
@@ -109,14 +97,6 @@ static char *fz_autoLayoutKey;
 }
 - (FZAutoLayoutNumber)multiplier{
     return ^id(CGFloat multiplier){
-        
-        if (self.ratioConstraint == self.lastModifiedConstraint
-            || self.widthConstraint == self.lastModifiedConstraint
-            || self.heightConstraint == self.lastModifiedConstraint) {
-            
-            //宽高比、高度、宽度无法设置multiplier
-            return self;
-        }
         
         [self updateConstraintWithPriority:self.lastModifiedConstraint.priority
                                     offset:self.lastModifiedConstraint.constant
@@ -265,10 +245,6 @@ static char *fz_autoLayoutKey;
 - (FZAutoLayoutNumber)widthIs{
     return ^id(CGFloat width){
       
-        if(self.widthConstraint){
-            [self.target removeConstraint:self.widthConstraint];
-            
-        }
         [self setConstaintOfMask:FZAutoLayoutMaskWidth
                           toView:nil
                             mask:0
@@ -276,16 +252,12 @@ static char *fz_autoLayoutKey;
                         priority:1000
                       multiplier:1.
                    equalRelation:NSLayoutRelationEqual];
-        self.widthConstraint = self.lastModifiedConstraint;
         return self;
     };
 }
 - (FZAutoLayoutNumber)heightIs{
     return ^id(CGFloat height){
         
-        if (self.heightConstraint) {
-            [self.target removeConstraint:self.heightConstraint];
-        }
         [self setConstaintOfMask:FZAutoLayoutMaskHeight
                           toView:nil
                             mask:0
@@ -293,16 +265,12 @@ static char *fz_autoLayoutKey;
                         priority:1000
                       multiplier:1.
                    equalRelation:NSLayoutRelationEqual];
-        self.heightConstraint = self.lastModifiedConstraint;
         return self;
     };
 }
 - (FZAutoLayoutNumber)aspectRatio{
     return ^id(CGFloat ratio){
         
-        if(self.ratioConstraint){
-            [self.target removeConstraint:self.ratioConstraint];
-        }
         [self setConstaintOfMask:FZAutoLayoutMaskWidth
                           toView:self.target
                             mask:FZAutoLayoutMaskHeight
@@ -310,7 +278,6 @@ static char *fz_autoLayoutKey;
                         priority:1000
                       multiplier:ratio
                    equalRelation:NSLayoutRelationEqual];
-        self.ratioConstraint = self.lastModifiedConstraint;
         return self;
     };
 }
@@ -366,10 +333,6 @@ static char *fz_autoLayoutKey;
     };
 }
 
-- (void)deactiveLastModifierConstraint{
-    [self.lastModifiedConstraint setActive:NO];//iOS 8 use this
-}
-
 - (void)setConstaintOfMask:(FZAutoLayoutMask) mask
                     toView:(UIView *)view
                       mask:(FZAutoLayoutMask) mask2
@@ -383,13 +346,13 @@ static char *fz_autoLayoutKey;
     self.lastModifiedConstraintView = view;
     self.lastModifiedConstraintReleatedView = [self ancestorOfView:view];
     
-    self.lastModifiedConstraint = [NSLayoutConstraint constraintWithItem:self.target
-                                                               attribute:[self convertFromMask:mask]
-                                                               relatedBy:equal
-                                                                  toItem:view
-                                                               attribute:[self convertFromMask:mask2]
-                                                              multiplier:multiplier
-                                                                constant:offset];
+    NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.target
+                                                                  attribute:[self convertFromMask:mask]
+                                                                  relatedBy:equal
+                                                                     toItem:view
+                                                                  attribute:[self convertFromMask:mask2]
+                                                                 multiplier:multiplier
+                                                                   constant:offset];
     
     UILayoutPriority uiPriority = priority*1.;
     if (uiPriority > UILayoutPriorityRequired) {
@@ -398,6 +361,11 @@ static char *fz_autoLayoutKey;
     if (uiPriority < 0) {
         uiPriority = 0;
     }
+    
+    //找到对应的可以替换的约束,并设置Active = NO
+    [[self findConstraint:[self uiformKeyOfConstraint:constraint] onView:self.lastModifiedConstraintReleatedView] setActive:NO];
+    
+    self.lastModifiedConstraint = constraint;
     self.lastModifiedConstraint.priority = uiPriority;
     [self.lastModifiedConstraintReleatedView addConstraint:self.lastModifiedConstraint];
 }
@@ -408,12 +376,6 @@ static char *fz_autoLayoutKey;
         return;
     }
     
-    BOOL isHeight = self.heightConstraint == self.lastModifiedConstraint;
-    BOOL isWidth  = self.widthConstraint == self.lastModifiedConstraint;
-    BOOL isRatio  = self.ratioConstraint == self.lastModifiedConstraint;
-    
-    [self deactiveLastModifierConstraint];
-    
     [self setConstaintOfMask:self.lastModifiedConstraintMask1
                       toView:self.lastModifiedConstraintView
                         mask:self.lastModifiedConstraintMask2
@@ -421,17 +383,27 @@ static char *fz_autoLayoutKey;
                     priority:priority
                   multiplier:multiplier
                equalRelation:relation];
-    
-    if (isHeight) {
-        self.heightConstraint = self.lastModifiedConstraint;
-    }
-    if (isWidth) {
-        self.widthConstraint = self.lastModifiedConstraint;
-    }
-    if (isRatio) {
-        self.ratioConstraint = self.lastModifiedConstraint;
-    }
 }
+
+
+- (NSString *)uiformKeyOfConstraint:(NSLayoutConstraint *)constaint{
+    return [NSString stringWithFormat:@"%p%ld%ld%p%ld",
+            constaint.firstItem,
+            constaint.firstAttribute,
+            constaint.relation,
+            constaint.secondItem,
+            constaint.secondAttribute];
+}
+
+- (NSLayoutConstraint *)findConstraint:(NSString *)constraintUinformKey onView:(UIView *)view{
+    for (NSLayoutConstraint *constraint in view.constraints) {
+        if([constraintUinformKey isEqualToString:[self uiformKeyOfConstraint:constraint]]){
+            return constraint;
+        }
+    }
+    return nil;
+}
+
 
 - (NSLayoutAttribute)convertFromMask:(FZAutoLayoutMask)mask{
     switch (mask) {
